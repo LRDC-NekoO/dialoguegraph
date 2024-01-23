@@ -1,18 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class DialogueGraph : MonoBehaviour
+public class DialogueGraph : EditorWindow
 {
-    // Start is called before the first frame update
-    void Start()
+    private DialogueGraphView _graphView;
+
+    [MenuItem("Graph/Dialogue Graph")]
+    public static void OpenDialogueGraphWindow()
     {
-        
+        var window = GetWindow<DialogueGraph>();
+        window.titleContent = new GUIContent("Dialogue Graph");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        _graphView = new DialogueGraphView
+        {
+            name = "Dialogue Graph"
+        };
+
+        _graphView.StretchToParentSize();
+        rootVisualElement.Add(_graphView);
+    }
+
+    private void OnDisable()
+    {
+        rootVisualElement.Remove(_graphView);
     }
 }
